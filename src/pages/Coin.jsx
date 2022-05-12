@@ -7,51 +7,44 @@ function Coin() {
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/coins/")
       .then((res) => res.json())
-      .then((data) => setCoin([data]));
-    //   .then(data => console.log('data', data))
+      .then((data) => setCoin(data));
   }, []);
+
   console.log("state coin", coin);
+
+  let filtered = coin.filter((item, index) => {
+    return index < 5;
+  });
+  console.log("filtered", filtered);
 
   return (
     <>
       <div>Coin List</div>
-      {/* {coin ? coin[0].map((item, idx) => ( */}
+
       <>
-      <div style={{ backgroundColor: "#F3F7FB", padding: 30 }}>
-
-        <div
-          className="d-flex justify-content-center "
-          style={{ backgroundColor: "white" }}
-        >
-          <Table striped bordered hover className="w-75 p-3">
-            <thead>
-              <tr style={{ backgroundColor: "#3783C6" }}>
-                <th style={{ color: "white" }}>id</th>
-                <th style={{ color: "white" }}>Name</th>
-                <th style={{ color: "white" }}>Symbol</th>
-                <th style={{ color: "white" }}>rank</th>
-                <th style={{ color: "white" }}>Type</th>
-                <th style={{ color: "white" }}>Active</th>
-              </tr>
-            </thead>
-            <tbody>
+        <div style={{ backgroundColor: "#F3F7FB", padding: 30 }}>
+          <div
+            className="d-flex justify-content-center "
+            style={{ backgroundColor: "white" }}
+          >
+            <table style={{ width: "75%" }}>
               <tr>
-                <td style={{ color: "#0062A6" }}>btc-bitcoin</td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Symbol</th>
+                <th>Type</th>
+                <th>Active</th>
               </tr>
-              <tr>
-                <td style={{ color: "#0062A6" }}>eth-ethereum</td>
-              </tr>
-              <tr>
-                <td style={{ color: "#0062A6" }}>usdt-tether</td>
-              </tr>
-              <tr>
-                <td style={{ color: "#0062A6" }}>bnb-binance-coin</td>
-              </tr>
-            </tbody>
-          </Table>
+              {filtered.map((item, idx) => (
+                <>
+                  <tr>
+                    <td>{item.id}</td>
+                  </tr>
+                </>
+              ))}
+            </table>
+          </div>
         </div>
-        </div>
-
       </>
       {/* ))
         : ""} */}
