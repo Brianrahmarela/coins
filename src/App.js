@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
 //pages
 import Home from "./pages/Home";
@@ -23,6 +23,12 @@ function App() {
         <Route path="/coin" element={<Coin />} />
         {/* <Route path="/coin/details" element={<Coin />} /> */}
       </Routes>
+      <div
+        style={{ backgroundColor: "#1D4279" }}
+        className="justify-content-center d-flex"
+      >
+        <p style={{color: 'white', margin: 10, padding: 0}}>Kandidat : [Brian Rahmarela]</p>
+      </div>
     </div>
   );
 }
