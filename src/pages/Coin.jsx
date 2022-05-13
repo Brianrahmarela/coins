@@ -13,8 +13,7 @@ import Pagination from "../component/Pagination";
 function Coin() {
   const [coin, setCoin] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postPerPage,] = useState(4);
-
+  const [postPerPage] = useState(4);
 
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/coins/")
@@ -32,18 +31,11 @@ function Coin() {
   //Get current post
   const indexOfLastPost = currentPage * postPerPage;
   const indexOfFirstPost = indexOfLastPost - postPerPage;
-  const currentPost = filtered.slice(indexOfFirstPost, indexOfLastPost)
-  console.log('currentPost', currentPost)
+  const currentPost = filtered.slice(indexOfFirstPost, indexOfLastPost);
+  console.log("currentPost", currentPost);
 
   //Change Page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
-
-  // function paginate(array, postPerPage, currentPage) {
-  //   return array.slice((currentPage - 1) * postPerPage, currentPage * postPerPage);
-  // }
-
-  // console.log("pagination", paginate(filtered, 4, 2));
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -101,31 +93,31 @@ function Coin() {
                     <th style={{ color: "white" }}>Action</th>
                   </tr>
                 </thead>
-                {currentPost.map((item, idx) => (
-                  <>
-                    <tbody>
-                      <tr key={idx}>
-                        <td style={{ color: "#0062A6" }}>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.symbol}</td>
-                        <td>{item.rank}</td>
-                        <td>{item.type}</td>
-                        <td>{item.is_active.toString()}</td>
-                        <td>
-                          <Button variant="danger">Delete</Button>{" "}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </>
-                ))}
+                <tbody>
+                  {currentPost.map((item, idx) => (
+                    <tr key={idx}>
+                      <td style={{ color: "#0062A6" }}>{item.id}</td>
+                      <td>{item.name}</td>
+                      <td>{item.symbol}</td>
+                      <td>{item.rank}</td>
+                      <td>{item.type}</td>
+                      <td>{item.is_active.toString()}</td>
+                      <td>
+                        <Button variant="danger">Delete</Button>{" "}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </Table>
             </div>
           </div>
-            <Pagination postPerPage={postPerPage} totalPost={filtered.length} paginate={paginate}/>
+          <Pagination
+            postPerPage={postPerPage}
+            totalPost={filtered.length}
+            paginate={paginate}
+          />
         </div>
       </>
-      {/* ))
-        : ""} */}
     </>
   );
 }
