@@ -27,7 +27,7 @@ function App() {
         style={{ backgroundColor: "#1D4279" }}
         className="justify-content-center d-flex"
       >
-        <p style={{color: 'white', margin: 10, padding: 0}}>Kandidat : [Brian Rahmarela]</p>
+        {/* <p style={{color: 'white', margin: 10, padding: 0}}>Kandidat : [Brian Rahmarela]</p> */}
       </div>
     </div>
   );
