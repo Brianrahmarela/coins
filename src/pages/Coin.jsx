@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   Button,
@@ -14,11 +15,18 @@ function Coin() {
   const [coin, setCoin] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage] = useState(4);
+  const [selectedItem, setSelectedItem] = useState({})
+  console.log('state selectedItem', selectedItem)
+  
+  let navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://api.coinpaprika.com/v1/coins/")
       .then((res) => res.json())
-      .then((data) => setCoin(data));
+      .then((data) => setCoin(data))
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   console.log("state coin", coin);
@@ -36,6 +44,13 @@ function Coin() {
 
   //Change Page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const selectId = (item) => {
+    console.log('item selected', item)
+    setSelectedItem(item)
+    navigate("/coin/details", { state: item });
+
+  }
 
   return (
     <>
@@ -94,19 +109,31 @@ function Coin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {currentPost.map((item, idx) => (
-                    <tr key={idx}>
-                      <td style={{ color: "#0062A6" }}>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.symbol}</td>
-                      <td>{item.rank}</td>
-                      <td>{item.type}</td>
-                      <td>{item.is_active.toString()}</td>
-                      <td>
-                        <Button variant="danger">Delete</Button>{" "}
-                      </td>
-                    </tr>
-                  ))}
+                  {currentPost == [] ? (
+                    <>
+                      <p>Not data found</p>
+                    </>
+                  ) : (
+                    currentPost.map((item, idx) => (
+                      <tr key={idx}>
+                        <td style={{ color: "#0062A6" }}>
+                          <a
+                            onClick={() => selectId(item)}
+                          >
+                            {item.id}
+                          </a>
+                        </td>
+                        <td>{item.name}</td>
+                        <td>{item.symbol}</td>
+                        <td>{item.rank}</td>
+                        <td>{item.type}</td>
+                        <td>{item.is_active.toString()}</td>
+                        <td>
+                          <Button variant="danger">Delete</Button>{" "}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </Table>
             </div>

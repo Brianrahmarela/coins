@@ -13,6 +13,7 @@ import {
 //pages
 import Home from "./pages/Home";
 import Coin from "./pages/Coin";
+import Detail from "./pages/Detail";
 
 function App() {
   return (
@@ -52,8 +53,8 @@ function App() {
       </>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/coin" element={<Coin />} />
-        {/* <Route path="/coin/details" element={<Coin />} /> */}
+        <Route exact path="/coin" element={<Coin />} />
+        <Route exact path="/coin/details" element={<Detail />} />
       </Routes>
       <div
         style={{ backgroundColor: "#1D4279" }}
