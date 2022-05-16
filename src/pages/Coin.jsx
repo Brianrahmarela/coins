@@ -7,7 +7,8 @@ import {
 	InputGroup,
 	FormControl,
 	Row,
-	Col
+	Col,
+	Spinner
 } from "react-bootstrap";
 import Pagination from "../component/Pagination";
 import Detail from "./Detail";
@@ -15,6 +16,7 @@ import { Routes, Route } from "react-router-dom";
 
 function Coin() {
 	const [coin, setCoin] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [postPerPage] = useState(4);
 	const [selectedItem, setSelectedItem] = useState({});
@@ -24,13 +26,14 @@ function Coin() {
 	console.log("state coin", coin);
 	console.log("state selectedItem", selectedItem);
 	console.log("state selectedSearch", selectedSearch);
+	console.log("state loading", loading);
 
 	let navigate = useNavigate();
 
 	useEffect(() => {
 		fetch("https://api.coinpaprika.com/v1/coins/")
 			.then((res) => res.json())
-			.then((data) => setCoin(data))
+			.then((data) => (setCoin(data), setLoading(false)))
 			.catch((error) => {
 				console.log(error);
 			});
@@ -66,6 +69,7 @@ function Coin() {
 		console.log("nameKey", nameKey);
 		console.log("arr", arr);
 		console.log("currentPost", currentPost);
+
 		if (nameKey !== "") {
 			currentPost = arr.find((x) => x.name === nameKey);
 			console.log("currentPost found", currentPost);
@@ -180,6 +184,8 @@ function Coin() {
 												<Button variant="danger">Delete</Button>{" "}
 											</td>
 										</tr>
+									) : item === undefined && loading === true ? (
+										<Spinner animation="border" />
 									) : (
 										currentPost.map((item, idx) => (
 											<tr key={idx}>
@@ -210,6 +216,7 @@ function Coin() {
 						setSelectedSearch={setSelectedSearch}
 					/>
 				</div>
+				{/* {loading ? <Spinner animation="border" /> : <p>Not found</p>} */}
 			</>
 		</>
 	);
